@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status Rujukan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Arial:wght@400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
     <div class="flex flex-col min-h-screen">
+        <!-- Header -->
         <header class="bg-blue-600 text-white p-5 flex justify-between items-center">
-            <a href="/dashboard" class="text-xl">
-                <h1>Sistem Informasi Posyandu Lansia Terpadu</h1>
+            <a href="/dashboard" class="text-xl font-bold">
+                Sistem Informasi Posyandu Lansia Terpadu
             </a>
             <a href="/" class="text-white font-bold">Log Out</a>
         </header>
 
         <div class="flex flex-1">
+            <!-- Sidebar -->
             <aside class="w-64 bg-white p-5 shadow-md">
                 <div class="text-center mb-8">
                     <h2 class="text-xl font-semibold mt-4">John Doe</h2>
@@ -34,52 +35,45 @@
                 </nav>
             </aside>
 
-            <!-- Content -->
-            <section class="flex-1 p-5 bg-gray-100">
-                <h2 class="text-2xl mb-6">Status Rujukan</h2>
-                
-                <!-- Simulate Data -->
-                <table class="w-full border-collapse">
-                    <thead>
-                        <tr>
-                            <th class="border border-gray-300 p-2 text-left bg-gray-200">ID Rujukan</th>
-                            <th class="border border-gray-300 p-2 text-left bg-gray-200">Nama Lansia</th>
-                            <th class="border border-gray-300 p-2 text-left bg-gray-200">ID Lansia</th>
-                            <th class="border border-gray-300 p-2 text-left bg-gray-200">Status Rujukan</th>
-                            <th class="border border-gray-300 p-2 text-left bg-gray-200">Rumah Sakit yang Dituju</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="hover:bg-gray-200 transition duration-300">
-                            <td class="border border-gray-300 p-2">R001</td>
-                            <td class="border border-gray-300 p-2">Budi Santoso</td>
-                            <td class="border border-gray-300 p-2">L123456789</td>
-                            <td class="border border-gray-300 p-2">Diterima</td>
-                            <td class="border border-gray-300 p-2">RS Cendana</td>
-                        </tr>
-                        <tr class="hover:bg-gray-200 transition duration-300">
-                            <td class="border border-gray-300 p-2">R002</td>
-                            <td class="border border-gray-300 p-2">Siti Aisyah</td>
-                            <td class="border border-gray-300 p-2">L987654321</td>
-                            <td class="border border-gray-300 p-2">Pending</td>
-                            <td class="border border-gray-300 p-2">RS Harapan Kita</td>
-                        </tr>
-                        <tr class="hover:bg-gray-200 transition duration-300">
-                            <td class="border border-gray-300 p-2">R003</td>
-                            <td class="border border-gray-300 p-2">Ali Maulana</td>
-                            <td class="border border-gray-300 p-2">L111222333</td>
-                            <td class="border border-gray-300 p-2">Diterima</td>
-                            <td class="border border-gray-300 p-2">RS Permata</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </div>
-    </div>
+            <!-- Main Content -->
+            <main class="flex-1 p-5 bg-gray-100">
+                <h2 class="text-2xl mb-6">Daftar Status Rujukan</h2>
 
-    <!-- Footer -->
-    <footer class="bg-blue-600 text-white text-center py-4">
-        © 2024 ALL RIGHTS RESERVED
-    </footer>
+                <div class="overflow-x-auto">
+                    <table class="table-auto border-collapse border border-gray-300 w-full bg-white">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 p-2">No</th>
+                                <th class="border border-gray-300 p-2">ID Rujukan</th>
+                                <th class="border border-gray-300 p-2">Status Rujukan</th>
+                                <th class="border border-gray-300 p-2">Nama Lansia</th>
+                                <th class="border border-gray-300 p-2">Tanggal Dibuat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($rujukan as $index => $r)
+                                <tr class="hover:bg-gray-200 transition duration-300">
+                                    <td class="border border-gray-300 p-2">{{ $index + 1 }}</td>
+                                    <td class="border border-gray-300 p-2">{{ $r->id }}</td>
+                                    <td class="border border-gray-300 p-2">{{ $r->status_rujukan }}</td>
+                                    <td class="border border-gray-300 p-2">{{ $r->kelolaKunjungan->lansia->nama ?? 'Nama Tidak Tersedia' }}</td>
+                                    <td class="border border-gray-300 p-2">{{ $r->created_at->format('d-m-Y H:i') }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="border border-gray-300 p-2 text-center">Data tidak tersedia</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-blue-600 text-white text-center py-4">
+            ©️ 2024 ALL RIGHTS RESERVED
+        </footer>
+    </div>
 </body>
 </html>

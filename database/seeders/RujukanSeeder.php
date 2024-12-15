@@ -3,32 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Rujukan;
+use Faker\Factory as Faker;
 
 class RujukanSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        DB::table('rujukan')->insert([
-            [
-                'id_rumah_sakit' => 1, // ID yang valid dari tabel rumah_sakit
-                'id_kelola_kunjungan' => 1, // ID yang valid dari tabel kelola_kunjungan
-                'created_at' => now(),
-                'updated_at' => now(),
-                'status_rujukan' => 'Diproses',
-            ],
-            [
-                'id_rumah_sakit' => 2, // ID yang valid dari tabel rumah_sakit
-                'id_kelola_kunjungan' => 2, // ID yang valid dari tabel kelola_kunjungan
-                'created_at' => now(),
-                'updated_at' => now(),
-                'status_rujukan' => 'Diterima',
-            ],
-        ]);
+        $faker = Faker::create();
+
+        for ($i = 0; $i < 20; $i++) {
+            Rujukan::create([
+                'id_kelola_kunjungan' => $faker->numberBetween(1, 20),
+                'id_rumah_sakit' => $faker->numberBetween(1, 20),
+                'status_rujukan' => $faker->randomElement(['Diproses', 'Diterima']),
+            ]);
+        }
     }
 }

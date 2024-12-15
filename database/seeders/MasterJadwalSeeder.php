@@ -3,32 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\MasterJadwal;
+use Faker\Factory as Faker;
 
 class MasterJadwalSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        DB::table('master_jadwal')->insert([
-            [
-                'id_sesi' => 1, // ID sesi yang valid dari tabel 'master_sesi'
-                'hari' => 'Senin',
-                'tanggal' => '2024-01-08',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_sesi' => 2, // ID sesi yang valid dari tabel 'master_sesi'
-                'hari' => 'Rabu',
-                'tanggal' => '2024-01-10',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $faker = Faker::create();
+
+        for ($i = 0; $i < 20; $i++) {
+            MasterJadwal::create([
+                'id_sesi' => $faker->numberBetween(1, 20),
+                'hari' => $faker->dayOfWeek,
+                'tanggal' => $faker->date,
+            ]);
+        }
     }
 }

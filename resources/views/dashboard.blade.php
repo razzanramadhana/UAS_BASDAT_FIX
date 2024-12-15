@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Informasi Posyandu Lansia</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100 font-sans">
     <div class="flex flex-col min-h-screen">
@@ -47,11 +48,50 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Section for Visualization -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-bold mb-4">Visualisasi Data Kesehatan</h3>
+                    <canvas id="healthChart" width="400" height="200"></canvas>
+                </div>
             </section>
         </div>
     </div>
+
     <footer class="bg-blue-600 text-white text-center py-4">
-        © 2024 ALL RIGHTS RESERVED
+        ©️ 2024 ALL RIGHTS RESERVED
     </footer>
+
+    <script>
+        // Mengambil data untuk grafik dari server
+        fetch('/dashboard/visualization-data')
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(item => item.skor_kesehatan); // Mengambil kategori skor kesehatan
+                const values = data.map(item => item.total); // Mengambil jumlah untuk setiap kategori
+
+                const ctx = document.getElementById('healthChart').getContext('2d');
+                const healthChart = new Chart(ctx, {
+                    type: 'bar', // Jenis grafik: 'bar', 'line', dll.
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Jumlah Lansia',
+                            data: values,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
 </body>
 </html>

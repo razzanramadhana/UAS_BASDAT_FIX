@@ -3,40 +3,25 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\HasilKesehatan;
+use Faker\Factory as Faker;
 
 class HasilKesehatanSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        DB::table('hasil_kesehatan')->insert([
-            [
-                'tekanan_darah' => '120/80',
-                'berat_badan' => '65',
-                'tinggi_badan' => '170',
-                'gula_darah' => '90',
-                'kolesterol' => '190',
-                'komentar_nakes' => 'Normal dan sehat',
-                'id_kelola_kunjungan' => 1, // ID yang valid dari tabel kelola_kunjungan
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'tekanan_darah' => '130/85',
-                'berat_badan' => '70',
-                'tinggi_badan' => '165',
-                'gula_darah' => '100',
-                'kolesterol' => '210',
-                'komentar_nakes' => 'Perlu perbaikan pola makan',
-                'id_kelola_kunjungan' => 2, // ID yang valid dari tabel kelola_kunjungan
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $faker = Faker::create();
+
+        for ($i = 0; $i < 20; $i++) {
+            HasilKesehatan::create([
+                'tekanan_darah' => $faker->randomNumber(3) . '/' . $faker->randomNumber(3),
+                'berat_badan' => $faker->randomFloat(2, 40, 120),
+                'tinggi_badan' => $faker->randomFloat(2, 140, 200),
+                'gula_darah' => $faker->randomFloat(2, 50, 200),
+                'kolesterol' => $faker->randomFloat(2, 100, 300),
+                'komentar_nakes' => $faker->sentence,
+                'id_kelola_kunjungan' => $faker->numberBetween(1, 20),
+            ]);
+        }
     }
 }

@@ -151,3 +151,4 @@ Route::delete('rujukan/{id}', [RujukanController::class, 'destroy'])->name('ruju
 
 // Untuk AJAX
 // Route::get('rujukan/fetchKunjungan', [RujukanController::class, 'fetchKunjungan'])->name('rujukan.fetchKunjungan');
+Route::get('/dashboard/visualization-data', [DashboardController::class, 'getVisualizationData']);

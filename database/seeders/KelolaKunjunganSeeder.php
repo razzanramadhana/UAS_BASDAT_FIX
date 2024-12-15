@@ -3,32 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\KelolaKunjungan;
+use Faker\Factory as Faker;
 
 class KelolaKunjunganSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        DB::table('kelola_kunjungan')->insert([
-            [
-                'id_lansia' => 1, // ID lansia yang valid dari tabel 'lansia'
-                'id_master_jadwal' => 1, // ID jadwal yang valid dari tabel 'master_jadwal'
-                'tanggal' => '2024-01-08',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id_lansia' => 2, // ID lansia yang valid dari tabel 'lansia'
-                'id_master_jadwal' => 2, // ID jadwal yang valid dari tabel 'master_jadwal'
-                'tanggal' => '2024-01-10',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $faker = Faker::create();
+
+        for ($i = 0; $i < 20; $i++) {
+            KelolaKunjungan::create([
+                'id_lansia' => $faker->numberBetween(1, 20),
+                'id_master_jadwal' => $faker->numberBetween(1, 20),
+                'tanggal' => $faker->date,
+            ]);
+        }
     }
 }
